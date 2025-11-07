@@ -10,7 +10,7 @@
 - JWT
 - POSTMAN
 - XAMPP
-- 
+
 ## -> Pré-requis
 - Symfony 5.15.1 || `Symfony CLI version 5.15.1 (c) 2021-2025 Fabien Potencier (2025-10-04T08:05:57Z - stable)`
 - PHP 8.4.13 || `PHP version 8.4.13 (C:\php-8.4.13\php.exe)`
@@ -23,8 +23,8 @@
 git clone https://github.com/MARQUESDINISJoaoGabriel/EFREI-B3-GrpA-0711.git
 cd ./EFREI-B3-GrpA-071/
 composer install
-```
-- <strong>/!\</strong> Écrire un `.env` suivant ce modèle :
+
+- <strong>/!\</strong> Écrire un `.env` suivant ce modèle (à peu près):
 ```python
 APP_ENV=dev
 APP_SECRET=101ada86cafa370e5d1180fea7968eb0
@@ -45,8 +45,25 @@ JWT_PASSPHRASE=692012d3524b92cca514e7a83ee7c68e85193fc789aa897632951428e7aa841f
 ```
 - Continuer avec les commandes suivantes
 ```
+php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --complete --force
 php bin/console cache:clear
+```
+
+- Load les Fixtures : 
+`php bin/console doctrine:fixtures:load`
+
+- Créer les clés OpenSSL (SUPPRIMER private.pem et public.pem)
+```bash
+# Créer le dossier s'il n'existe pas
+mkdir -p config/jwt
+
+# Générer la clé privée (avec passphrase)
+openssl genpkey -algorithm RSA -out config/jwt/private.pem -aes256
+
+# Générer la clé publique à partir de la clé privée
+openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -pubout
+
 ```
 
 - Exécuter les builds + serveurs
