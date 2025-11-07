@@ -61,32 +61,271 @@ ou `symfony server:start`
 ## -> Immport données POSTMAN  
 ```json
 {
-"sample":"test",
-"sample2": {
-  "sample21":"test",
-  "sample22":"test",
-  "table" : [{
-      "table1":"test",
-      "table2":"test2"
-    }]
-  }
+  "info": {
+    "_postman_id": "f1-api-symfony-efrei-2025",
+    "name": "EFREI – F1 Infractions API (Symfony + JWT)",
+    "description": "Collection Postman pour le projet Symfony EFREI Backend : gestion des écuries, pilotes et infractions (authentification JWT).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth – Login JWT",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"admin@f1api.com\",\n    \"password\": \"admin123\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/login",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ecuries – Liste (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/ecuries",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "ecuries"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Ecuries – Mise à jour pilotes (PATCH)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"pilotes\": [1, 2, 3]\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/ecuries/1/pilotes",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "ecuries", "1", "pilotes"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Pilotes – Liste complète (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/pilotes",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "pilotes"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Infractions – Liste (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/infractions",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "infractions"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Infractions – Créer (POST - Admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"type\": \"penalite\",\n    \"points\": 3,\n    \"description\": \"Collision avec un autre pilote\",\n    \"course\": \"Grand Prix de Monaco\",\n    \"pilote_id\": 1\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/infractions",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "infractions"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Infractions – Filtre par écurie (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/infractions?ecurie=1",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "infractions"],
+          "query": [{ "key": "ecurie", "value": "1" }]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Infractions – Filtre par pilote (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/infractions?pilote=2",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "infractions"],
+          "query": [{ "key": "pilote", "value": "2" }]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Infractions – Filtre par date (GET)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/infractions?date=2025-11-07",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "infractions"],
+          "query": [{ "key": "date", "value": "2025-11-07" }]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwt_token",
+      "value": ""
+    }
+  ]
 }
 ```
 
 ## -> Informations
+
 ### Entités
-->    <br>
-->    <br>
-->    <br>
+
+-> Users  
+- `id` (int)  
+- `email` (string, unique)  
+- `password` (string, hashé)  
+- `roles` (json)  
+> Utilisé pour l’authentification JWT.  
+> Un utilisateur par défaut est créé dans les fixtures :  
+> **email :** admin@f1api.com / **password :** admin123 (ROLE_ADMIN)
+
+-> Écurie  
+- `id` (int)  
+- `nom` (string, unique)  
+- `moteur` (string)  
+- `pilotes` (OneToMany → Pilote)  
+> Exemple : Ferrari, Red Bull Racing, Mercedes AMG.  
+
+-> Pilote  
+- `id` (int)  
+- `prenom` (string)  
+- `nom` (string)  
+- `points` (int, défaut = 12)  
+- `statut` (string : "titulaire", "réserviste", "suspendu")  
+- `date_debut_f1` (date)  
+- `ecurie` (ManyToOne → Ecurie)  
+> Chaque pilote appartient à une écurie.  
+> Si un pilote atteint 0 point, son statut devient automatiquement “suspendu”.  
+
+-> Infraction  
+- `id` (int)  
+- `type` (string : "amende" ou "penalite")  
+- `montant` (float, optionnel pour amende)  
+- `points` (int, optionnel pour pénalité)  
+- `description` (text)  
+- `course` (string)  
+- `date` (datetime)  
+- `pilote` (ManyToOne → Pilote, nullable)  
+- `ecurie` (ManyToOne → Ecurie, nullable)  
+> Seuls les utilisateurs avec le rôle ADMIN peuvent créer une infraction.  
+> Une pénalité en points peut suspendre un pilote si ses points atteignent 0.  
+
 ### Routes
 ```
-GET-
-/
-POST-
-/
-PATCH-
-/
-DELETE-
-/
+
+POST - /api/login
+
+> Authentification JWT (connexion)
+
+GET - /api/ecuries
+
+> Liste toutes les écuries avec leurs pilotes (authentifié)
+
+PATCH - /api/ecuries/{id}/pilotes
+
+> Met à jour les pilotes d'une écurie (admin uniquement)
+
+GET - /api/pilotes
+
+> Liste complète des pilotes et de leurs écuries (authentifié)
+
+GET - /api/infractions
+
+> Liste toutes les infractions (authentifié)
+> Filtres disponibles : ?ecurie=ID / ?pilote=ID / ?date=YYYY-MM-DD
+
+POST - /api/infractions
+
+> Crée une nouvelle infraction (admin uniquement)
+
+DELETE - /api/infractions/{id}
+
+> Supprime une infraction (admin uniquement)
+
 ```
+
+
+
 ### Documentation Symfony : https://symfony.com/doc
